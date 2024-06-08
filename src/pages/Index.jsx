@@ -24,11 +24,11 @@ const Index = () => {
       setIsConnected(true);
     };
 
-    wsRef.current.onmessage = (event) => {
+    wsRef.current.onmessage = async (event) => {
       const audioBlob = new Blob([event.data], { type: "audio/webm" });
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
-      audio.play();
+      await audio.play();
     };
 
     wsRef.current.onclose = () => {
@@ -55,14 +55,15 @@ const Index = () => {
     const destination = audioContextRef.current.createMediaStreamDestination();
     source.connect(destination);
 
-    mediaRecorderRef.current = new MediaRecorder(destination.stream, { mimeType: "audio/webm" });
-    mediaRecorderRef.current.ondataavailable = (event) => {
+    mediaRecorderRef.current = new MediaRecorder(destination.stream, { mimeType: "audio/webm; codecs=opus" });
+    mediaRecorderRef.current.ondataavailable = async (event) => {
       if (event.data.size > 0) {
         wsRef.current.send(event.data);
       }
     };
 
-    mediaRecorderRef.current.start(100); // Send audio data every 100ms
+    mediaRecorderRef.current.start(100);
+    setIsRecording(true);
     setIsRecording(true);
   };
 
