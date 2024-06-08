@@ -44,6 +44,7 @@ const Index = () => {
   const handleRecord = async () => {
     if (isRecording) {
       mediaRecorderRef.current.stop();
+      mediaStreamRef.current.getTracks().forEach((track) => track.stop());
       setIsRecording(false);
       return;
     }
