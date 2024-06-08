@@ -69,11 +69,11 @@ const Index = () => {
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <VStack spacing={4}>
         <Text fontSize="2xl">Full Duplex Audio Interface</Text>
-        <Button onClick={handleConnect} colorScheme={isConnected ? "red" : "green"} leftIcon={isConnected ? <FaStop /> : <FaMicrophone />}>
+        <Button onClick={() => handleConnect()} colorScheme={isConnected ? "red" : "green"} leftIcon={isConnected ? <FaStop /> : <FaMicrophone />}>
           {isConnected ? "Disconnect" : "Connect"}
         </Button>
         {isConnected && (
-          <Button onClick={handleRecord} colorScheme={isRecording ? "red" : "blue"} leftIcon={isRecording ? <FaStop /> : <FaMicrophone />}>
+          <Button onClick={() => handleRecord()} colorScheme={isRecording ? "red" : "blue"} leftIcon={isRecording ? <FaStop /> : <FaMicrophone />}>
             {isRecording ? "Stop Recording" : "Start Recording"}
           </Button>
         )}
